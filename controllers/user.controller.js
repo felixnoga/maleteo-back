@@ -1,9 +1,10 @@
 const User = require('../models/User')
+const debug = require('debug')('Maleteo-Back-APICRUD:user.controller')
 
 const getCurrentUser = async (req, res, next) => {
   try {
     const UserId = req.UserId
-    console.log('getCurrent User buscando por ' + UserId)
+    debug('getCurrent User buscando por ' + UserId)
     const doc = await User.findOne(UserId)
 
     return res.status(200).json(doc)
@@ -14,9 +15,9 @@ const getCurrentUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    console.log('buscando Todos los usuarios')
+    debug('buscando Todos los usuarios')
     const Users = await User.find()
-    console.log(Users)
+    debug(Users)
 
     return res.status(200).json(Users)
   } catch (err) {
@@ -28,7 +29,7 @@ const getUserById = async (req, res, next) => {
   const { userId } = req.params
 
   try {
-    console.log('buscando por ' + userId)
+    debug('buscando por ' + userId)
     const user = await User.findById(userId)
 
     if (user) {
@@ -43,10 +44,10 @@ const updateCurrentUser = async (req, res, next) => {
   const UserId = req.UserId
   const newData = JSON.stringify(req.body)
 
-  console.log ("Me dispongo a modificar "+UserId+" con "+newData)
+  debug('Me dispongo a modificar ' + UserId + ' con ' + newData)
 
-  const olddoc=await User.findByIdAndUpdate(UserId, req.body, { upsert: true })
-  console.log ("Updated ",olddoc)
+  const olddoc = await User.findByIdAndUpdate(UserId, req.body, { upsert: true })
+  debug('Updated ', olddoc)
   const newdoc = await User.findOne(UserId)
 
   return res.status(200).json(newdoc)
