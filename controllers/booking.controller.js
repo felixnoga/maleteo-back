@@ -35,7 +35,7 @@ const getCurrentKeeperBooking = async (req, res, next) => {
    if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
 
   try {
-    debug('Populando Keeper Books para el usuario ' + userId)
+    debug('Populando Keeper Books para el usuario autenticado ' + userId)
     const booking = await Booking.find({ keeper: userId }).populate('client').populate('keeper').populate('site')
 
     if (booking) {
