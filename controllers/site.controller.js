@@ -3,6 +3,7 @@ const debug = require('debug')('Maleteo-Back-APICRUD:site.controller')
 
 const createCurrentUserSite = (req, res, next) => {
   const newSite = new Site({ ...req.body, owner: req.UserId })
+  if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
   newSite
     .save()
     .then(response => {
@@ -48,6 +49,8 @@ const getAllUsersSite = async (req, res, next) => {
 const updateSiteById = async (req, res, next) => {
   const { sitio } = req.params
   const userId = req.UserId
+
+  if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
 
   try {
     debug('Actualizando ' + sitio)

@@ -8,7 +8,7 @@ const router = express.Router()
 router.put('/', [isAuthenticated], siteController.createCurrentUserSite)
 router.get('/', [isAuthenticated], siteController.getCurrentUserSite)
 router.get('/All', [isAuthenticated], siteController.getAllUsersSite)
-router.patch('/:site', [isAuthenticated], siteController.updateSiteById)
+router.put('/:site', [isAuthenticated], siteController.updateSiteById)
 
 /*
 
