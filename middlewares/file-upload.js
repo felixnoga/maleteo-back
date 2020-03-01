@@ -4,7 +4,7 @@ const path = require('path')
 
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
-    debug('file:' + Date.now() + path.extname(file.originalname))
+    debug('file: ', Date.now() + path.extname(file.originalname))
     cb(null, Date.now() + path.extname(file.originalname))
   },
   destination: (req, file, cb) => {
@@ -12,14 +12,17 @@ const storage = multer.diskStorage({
   }
 })
 
-const VALID_FILE_TYPES = ['image/png', 'image/jpg']
+const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg']
 
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
+    debug('file type is ', file.mimetype)
     if (!VALID_FILE_TYPES.includes(file.mimetype)) {
+      debug('Middleware upload can not validate filetype')
       cb(new Error('Invalid file type'))
     } else {
+      debug('Middleware uploaded picture to public server folder ok')
       cb(null, true)
     }
   }
