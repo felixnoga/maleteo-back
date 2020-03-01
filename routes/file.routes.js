@@ -1,4 +1,5 @@
 const express = require('express')
+const debug = require('debug')('Maleteo-Back-APICRUD:file.routes')
 
 const { uploadToCloudinary } = require('../config/cloudinary')
 const { fileUpload } = require('../middlewares/file-upload')
@@ -8,6 +9,7 @@ const router = express.Router()
 router.post('/upload', [fileUpload.single('picture')], async (req, res, next) => {
   try {
     const imageUrl = await uploadToCloudinary(req.file)
+    debug('Uploaded to ', imageUrl)
     res.status(200).json({ body: req.body, file: req.file, image: imageUrl })
   } catch (err) {
     next(err)
