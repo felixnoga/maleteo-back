@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/upload', [fileUpload.single('picture')], async (req, res, next) => {
   try {
     const imageUrl = await uploadToCloudinary(req.file)
-    debug('Uploaded to ', imageUrl)
+    debug('Uploaded to ', imageUrl, ' as ', imagePublicId)
     res.status(200).json({ body: req.body, file: req.file, image: imageUrl })
   } catch (err) {
     next(err)

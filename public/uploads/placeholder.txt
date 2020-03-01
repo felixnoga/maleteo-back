@@ -1,0 +1,2 @@
+THis directory is used as a temporary folder for uploaded files and images using multer
+Please do not delete this directory.
