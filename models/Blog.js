@@ -16,7 +16,8 @@ const blogSchema = new Schema(
       enum: ['Novedad', 'Experiencia', 'Blog', 'Otros'],
       default: 'Novedad'
     },
-    tags: [(type: String)],
+
+    tags: [{ type: String }],
     title: { type: String, required: true },
     brief: { type: String, required: false },
     body: { type: String, required: true },
@@ -35,6 +36,7 @@ const blogSchema = new Schema(
       ref: 'Review'
     }
     ]
+
   },
   {
     timestamps: true
