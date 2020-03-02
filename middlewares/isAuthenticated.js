@@ -1,4 +1,4 @@
-const debug = require('debug')('Maleteo-Back-APICRUD:*')
+const debug = require('debug')('Maleteo-Back-APICRUD:isAuthenticated')
 const passport = require('passport')
 
 const isAuthenticated = (req, res, next) => {
@@ -7,8 +7,8 @@ const isAuthenticated = (req, res, next) => {
       return res.status(401).json('Unauthorized user')
     }
 
-    //Access to user object,  retrieve user ID,  and add that ID on the REQuest so it can be processed
-    //by the endpoint
+    // Access to user object,  retrieve user ID,  and add that ID on the REQuest so it can be processed
+    // by the endpoint
     debug('User data is ', user)
     console.log('User:', user)
 

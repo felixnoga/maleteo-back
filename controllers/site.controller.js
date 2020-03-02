@@ -3,6 +3,9 @@ const debug = require('debug')('Maleteo-Back-APICRUD:site.controller')
 
 const createCurrentUserSite = (req, res, next) => {
   const newSite = new Site({ ...req.body, owner: req.UserId })
+
+  const keeper = req.UserKeeper
+  if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
   newSite
     .save()
     .then(response => {
@@ -18,7 +21,7 @@ const getCurrentUserSite = async (req, res, next) => {
 
   try {
     debug('Populando Current Site para el usuario ' + userId)
-    const site = await await Site.find({ owner: userId }).populate('owner')
+    const site = await Site.find({ owner: userId }).populate('owner')
 
     if (site) {
       return res.status(200).json(site)
@@ -31,7 +34,7 @@ const getCurrentUserSite = async (req, res, next) => {
 const getAllUsersSite = async (req, res, next) => {
   const role = req.UserRole
 
-  //if (role=='user') return res.status(400).json('Restricted to admin users')
+  if (role !== 'admin') return res.status(400).json('Restricted to admin users')
 
   try {
     debug('Populando Todos los Sites')
@@ -46,16 +49,19 @@ const getAllUsersSite = async (req, res, next) => {
 }
 
 const updateSiteById = async (req, res, next) => {
-  const { sitio } = req.params
+  const { site } = req.params
   const userId = req.UserId
+  const keeper = req.UserKeeper
+
+  if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
 
   try {
-    debug('Actualizando ' + sitio)
+    debug('Actualizando ' + site)
 
-    const site = await Site.updateMany({ owner: userId, _id: sitio}, { ...req.body })
+    const doc = await Site.updateMany({ owner: userId, _id: site }, { ...req.body })
 
-    if (sitio) {
-      return res.status(200).json(sitio)
+    if (doc) {
+      return res.status(200).json(doc)
     }
   } catch (err) {
     return res.status(400).json(err.message)

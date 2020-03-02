@@ -14,6 +14,7 @@ const passport = require('passport')
 require('./config/passport')
 
 const indexRouter = require('./routes/index.routes')
+const fileRouter = require('./routes/file.routes')
 const authRouter = require('./routes/auth.routes')
 const userRouter = require('./routes/user.routes')
 const siteRouter = require('./routes/site.routes')
@@ -22,11 +23,9 @@ const blogRouter = require('./routes/blog.routes')
 
 const app = express()
 
+app.use(cors()) // Enable all Cors request
 app.use(logger('dev'))
-app.use(cors())  // Enable all Cors request
 app.use(express.json())
-
-
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
@@ -35,6 +34,8 @@ app.use(passport.initialize())
 debug('Test debuging in app.js')
 
 app.use('/', indexRouter)
+app.use('/file', fileRouter)
+
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/site', siteRouter)
