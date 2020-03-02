@@ -4,9 +4,8 @@ const debug = require('debug')('Maleteo-Back-APICRUD:user.controller')
 const getCurrentUser = async (req, res, next) => {
   try {
     const UserId = req.UserId
-    debug('getCurrent User buscando por ' + UserId)
-    const doc = await User.findOne(UserId)
-
+    debug('In getCurrentUser buscando por ' + UserId)
+    const doc = await User.findOne(UserId).populate('review')
     return res.status(200).json(doc)
   } catch (err) {
     return res.status(500).json(err.message)
@@ -16,7 +15,7 @@ const getCurrentUser = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   try {
     debug('buscando Todos los usuarios')
-    const Users = await User.find()
+    const Users = await User.find().populate('review')
     debug(Users)
 
     return res.status(200).json(Users)
@@ -30,7 +29,7 @@ const getUserById = async (req, res, next) => {
 
   try {
     debug('buscando por ' + userId)
-    const user = await User.findById(userId)
+    const user = await User.findById(userId).populate('review')
 
     if (user) {
       return res.status(200).json(user)
@@ -48,7 +47,9 @@ const updateCurrentUser = async (req, res, next) => {
 
   const olddoc = await User.findByIdAndUpdate(UserId, req.body, { upsert: true })
   debug('Updated ', olddoc)
-  const newdoc = await User.findOne(UserId)
+  const newdoc = await User.findOne(UserId).populate('review')
+
+  //TODO: Actualizar el usuario en todos los reviews existentes
 
   return res.status(200).json(newdoc)
 }

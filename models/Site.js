@@ -20,7 +20,14 @@ const siteSchema = new Schema(
       enum: ['Habitacion', 'Hall', 'Trastero', 'Buhardilla', 'Garaje'],
       default: 'Habitacion'
     },
-    space_img: { type: [String], required: false },
+    space_img: {
+      type: [String],
+      default: [
+        'https://res.cloudinary.com/agorostidi/image/upload/v1583054497/site-sample-2_ncmdgp.jpg',
+        'https://res.cloudinary.com/agorostidi/image/upload/v1583054497/site-sample-5_chxm1g.jpg'
+      ],
+      required: false
+    },
     street: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },
@@ -41,7 +48,12 @@ const siteSchema = new Schema(
         type: [Number],
         required: false
       }
+    },
+    review: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Review'
     }
+    ]
   },
   {
     timestamps: true

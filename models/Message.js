@@ -4,19 +4,17 @@ const { Schema } = mongoose
 
 const messageSchema = new Schema(
   {
-    from: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+    conversationId: {
+      type: Schema.Types.ObjectId,
+      required: true
     },
-    to: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    text: { type: String, required: true },
-    status: {
+    body: {
       type: String,
-      enum: ['Leido', 'Pendiente'],
-      default: 'Pendiente'
+      required: true
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     }
   },
   {
