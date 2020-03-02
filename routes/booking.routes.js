@@ -7,7 +7,8 @@ const { isAuthenticated } = require('../middlewares/isAuthenticated')
 
 router.get('/', [isAuthenticated], bookingController.getCurrentUserBooking)
 router.put('/', [isAuthenticated], bookingController.createCurrentUserBooking)
-router.get('/Keeper', [isAuthenticated], bookingController.getCurrentKeeperBooking)
+router.put('/create', [isAuthenticated], bookingController.createCurrentUserBooking)
+router.get('/keeper', [isAuthenticated], bookingController.getCurrentKeeperBooking)
 
 /*
 router.get('/user/:userId', [isAuthenticated], userController.getUserById)

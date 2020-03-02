@@ -20,7 +20,7 @@ const register = (req, res, next) => {
       const error = new Error('There was an error creating the user')
       return next(error)
     }
-    debug('User created:',user)
+    debug('User created:', user)
     login(req, res, next)
   })(req, res, next)
 }
@@ -30,8 +30,10 @@ const isLoggedIn = (req, res, next) => {
 }
 
 const whoAmI = (req, res, next) => {
-  debug('Inside Whoami - User is ', req.UserId)
-  res.status(200).json('You are logged as userId ' + req.UserId)
+
+  const auth_user = process.env.FORCE_USER=="YES" ? process.env.FAKE_USER_OBJECTID : req.UserId
+
+  res.status(200).json('Your are authenticated as user'+ auth_user)
 }
 
 module.exports = {
