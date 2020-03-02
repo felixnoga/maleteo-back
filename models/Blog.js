@@ -13,19 +13,20 @@ const blogSchema = new Schema(
     },
     articleType: {
       type: String,
-      enum: ['Novedad', 'Experiencia', 'Blog','Otros'],
+      enum: ['Novedad', 'Experiencia', 'Blog', 'Otros'],
       default: 'Novedad'
 
     },
-    tags: [type: String],
+    tags: [{ type: String }],
     title: { type: String, required: true },
     brief: { type: String, required: false},
     body: { type: String, required: true },
     picture_url: { type: String, required: false },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
+      ref: 'User',
+      required: false
+    }
   },
   {
     timestamps: true
