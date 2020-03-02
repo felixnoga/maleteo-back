@@ -5,7 +5,7 @@ const { Schema } = mongoose
 const blogSchema = new Schema(
   {
     publishedDate: { type: Date, required: false },
-    status:  {
+    status: {
       type: String,
       enum: ['Publicado', 'Borrador', 'Pendiente'],
       default: 'Borrador',
@@ -13,19 +13,28 @@ const blogSchema = new Schema(
     },
     articleType: {
       type: String,
-      enum: ['Novedad', 'Experiencia', 'Blog','Otros'],
+      enum: ['Novedad', 'Experiencia', 'Blog', 'Otros'],
       default: 'Novedad'
-
     },
-    tags: [type: String],
+    tags: [(type: String)],
     title: { type: String, required: true },
-    brief: { type: String, required: false},
+    brief: { type: String, required: false },
     body: { type: String, required: true },
-    picture_url: { type: String, required: false },
+    picture_url: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/agorostidi/image/upload/v1583054497/experiencias-sample_tbehzj.jpg',
+      required: false
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    review: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Review'
+    }
+    ]
   },
   {
     timestamps: true

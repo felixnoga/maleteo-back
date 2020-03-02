@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
+const gravatarUrl = require('gravatar-url')
+const gravatarDefaultImg = 'https://gravatar.com/avatar/9bc3d57ccf05b7ebfc32e203e012144f?size=200'
 const { Strategy: LocalStrategy } = require('passport-local')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const debug = require('debug')('Maleteo-Back-APICRUD:passport')
@@ -9,13 +11,17 @@ const User = require('../models/User')
 
 const jwtSecret = process.env.JWT_SECRET || 'upgrade-development-default-secret-2020'
 
+
+// You can use https://davidinformatico.com/jwt-express-js-passport/  as reference
+
 passport.use(
   'register',
 
   new LocalStrategy(
-    { usernameField: 'email', passwordField: 'password', session: false },
-    (email, password, done) => {
-      debug ('Inside passport.use-register.  Lookign for email ',email)
+    { usernameField: 'email', passwordField: 'password', passReqToCallback: true, session: false },
+    (req, email, password, done) => {
+      debug('Inside passport.use-register.  Lookign for email ', email)
+      debug('Request ', req.body)
       User.findOne({ email })
         .then(user => {
           if (user) {
@@ -33,7 +39,12 @@ passport.use(
                 return done(hashError, null)
               }
 
+              //TODO: Finish Adding default profile img from gravatar
+              //debug ("At register user is ",JSON.stringify(req.body))
+              const gravatarImg = gravatarUrl(email, { size: 200, default: 'mm' })
               const newUser = new User({
+                profile_img: gravatarImg,
+                ...req.body,
                 email,
                 password: encryptedPass
               })

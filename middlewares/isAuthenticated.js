@@ -12,9 +12,13 @@ const isAuthenticated = (req, res, next) => {
     debug('User data is ', user)
     console.log('User:', user)
 
+    // Store on Req basic user data so it can be populated internally on a secure way  across all request
     req.UserId = user._id
     req.UserRole = user.role
     req.UserKeeper = user.isKeeper
+    req.userName = user.name
+    req.userSuname = user.surname
+    req.userImg = user.profile_img
 
     next()
   })(req, res, next)

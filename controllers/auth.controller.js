@@ -20,7 +20,7 @@ const register = (req, res, next) => {
       const error = new Error('There was an error creating the user')
       return next(error)
     }
-    debug('User created')
+    debug('User created:',user)
     login(req, res, next)
   })(req, res, next)
 }
