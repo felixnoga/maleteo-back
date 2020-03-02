@@ -34,7 +34,7 @@ const getCurrentUserSite = async (req, res, next) => {
 const getAllUsersSite = async (req, res, next) => {
   const role = req.UserRole
 
-  if (role !== 'admin') return res.status(400).json('Restricted to admin users')
+  // if (role !== 'admin') return res.status(400).json('Restricted to admin users')
 
   try {
     debug('Populando Todos los Sites')
