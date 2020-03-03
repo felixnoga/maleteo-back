@@ -21,6 +21,7 @@ const siteRouter = require('./routes/site.routes')
 const bookingRouter = require('./routes/booking.routes')
 const reviewRouter = require('./routes/review.routes')
 const blogRouter = require('./routes/blog.routes')
+const chatRouter = require('./routes/chat.routes')
 
 
 const app = express()
@@ -44,6 +45,7 @@ app.use('/site', siteRouter)
 app.use('/booking', bookingRouter)
 app.use('/review', reviewRouter)
 app.use('/articles', blogRouter)
+app.use('/chat', chatRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -15,6 +15,15 @@ const createArticle = async (req, res, next) => {
 const getAllArticles = async (req, res, next) => {
   try {
     const articles = await Article.find()
+      .sort('-createdAt')
+      .limit(10)
+      .populate({
+        path: 'author',
+        select: 'name surname email profile_img'
+      })
+      .populate({
+        path: 'review'
+      })
     return res.status(200).json(articles)
   } catch (e) {
     return next(e)
