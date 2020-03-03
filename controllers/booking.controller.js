@@ -19,9 +19,21 @@ const getCurrentUserBooking = async (req, res, next) => {
   try {
     debug('Populando Current Books para el usuario ' + userId)
     const booking = await Booking.find({ client: userId })
-      .populate('client')
-      .populate('keeper')
-      .populate('site')
+      .sort('-createdAt')
+      .limit(100)
+      .populate({
+        path: 'client',
+        select: 'name surname email profile_img'
+      })
+      .populate({
+        path: 'keeper',
+        select: 'name surname email profile_img'
+      })
+      .populate({
+        path: 'site',
+        select:
+          'location property type space_img name description street city state country region zip'
+      })
 
     if (booking) {
       return res.status(200).json(booking)
@@ -40,9 +52,21 @@ const getCurrentKeeperBooking = async (req, res, next) => {
   try {
     debug('Populando Keeper Books para el usuario autenticado ' + userId)
     const booking = await Booking.find({ keeper: userId })
-      .populate('client')
-      .populate('keeper')
-      .populate('site')
+      .sort('-createdAt')
+      .limit(100)
+      .populate({
+        path: 'client',
+        select: 'name surname email profile_img'
+      })
+      .populate({
+        path: 'keeper',
+        select: 'name surname email profile_img'
+      })
+      .populate({
+        path: 'site',
+        select:
+          'location property type space_img name description street city state country region zip'
+      })
 
     if (booking) {
       return res.status(200).json(booking)

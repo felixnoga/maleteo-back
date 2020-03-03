@@ -21,9 +21,9 @@ const isAuthenticated = (req, res, next) => {
     req.UserId = user._id
     req.UserRole = user.role
     req.UserKeeper = user.isKeeper
-    req.userName = user.name
-    req.userSurname = user.surname
-    req.userImg = user.profile_img
+    req.UserName = user.name
+    req.UserSurname = user.surname
+    req.UserImg = user.profile_img
 
     next()
   })(req, res, next)
