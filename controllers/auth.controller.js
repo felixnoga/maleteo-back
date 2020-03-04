@@ -26,7 +26,7 @@ const register = (req, res, next) => {
 }
 
 const isLoggedIn = (req, res, next) => {
-  res.status(200).json('User is logged in')
+  res.status(200).json(req.UserData)
 }
 
 const whoAmI = (req, res, next) => {

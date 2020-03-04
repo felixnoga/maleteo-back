@@ -18,6 +18,7 @@ const isAuthenticated = (req, res, next) => {
     debug('Middleware authenticated user as ', user)
 
     // Store on Req basic user data so it can be populated internally on a secure way  across all request
+    req.UserData = user
     req.UserId = user._id
     req.UserRole = user.role
     req.UserKeeper = user.isKeeper

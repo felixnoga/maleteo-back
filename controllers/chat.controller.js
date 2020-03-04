@@ -81,7 +81,7 @@ const newConversation = function(req, res, next) {
     const message = new Message({
       conversationId: newConversation._id,
       body: req.body.composedMessage,
-      author: req.user._id
+      author: req.req.UserId
     })
 
     message.save(function(err, newMessage) {
@@ -100,7 +100,7 @@ const sendReply = function(req, res, next) {
   const reply = new Message({
     conversationId: req.params.conversationId,
     body: req.body.composedMessage,
-    author: req.user._id
+    author: req.req.UserId
   })
 
   reply.save(function(err, sentReply) {
