@@ -1,4 +1,6 @@
 const passport = require('passport')
+const User = require('../models/User')
+
 const debug = require('debug')('Maleteo-Back-APICRUD:auth.controller')
 
 const login = (req, res, next) => {
@@ -26,14 +28,27 @@ const register = (req, res, next) => {
 }
 
 const isLoggedIn = (req, res, next) => {
-  res.status(200).json(req.UserData)
+  debug('Is logged as user ', req.UserName)
+  res.status(200).json('User is logged in')
 }
 
-const whoAmI = (req, res, next) => {
+const whoAmI = async (req, res, next) => {
+  const auth_user = process.env.FORCE_USER == 'YES' ? process.env.FAKE_USER_OBJECTID : req.UserId
 
-  const auth_user = process.env.FORCE_USER=="YES" ? process.env.FAKE_USER_OBJECTID : req.UserId
-
-  res.status(200).json('Your are authenticated as user'+ auth_user)
+  try {
+    const UserId = req.UserId
+    debug('In getCurrentUser buscando por ' + UserId)
+    const doc = await User.findOne(auth_user).select({
+      _id: 0,
+      name: 1,
+      surname: 1,
+      email: 1,
+      isKeeper: 1
+    })
+    return res.status(200).json(doc)
+  } catch (err) {
+    return res.status(500).json(err.message)
+  }
 }
 
 module.exports = {
