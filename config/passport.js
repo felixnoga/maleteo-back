@@ -44,7 +44,7 @@ passport.use(
               const gravatarImg = gravatarUrl(email, { size: 200, default: 'mm' })
               const newUser = new User({
                 profile_img: gravatarImg,
-                ...req.body,
+                ...req.body,  
                 email,
                 password: encryptedPass
               })
