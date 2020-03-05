@@ -1,4 +1,6 @@
 const passport = require('passport')
+const User = require('../models/User')
+
 const debug = require('debug')('Maleteo-Back-APICRUD:auth.controller')
 
 const login = (req, res, next) => {
@@ -20,18 +22,35 @@ const register = (req, res, next) => {
       const error = new Error('There was an error creating the user')
       return next(error)
     }
-    debug('User created:',user)
+    debug('User created:', user)
     login(req, res, next)
   })(req, res, next)
 }
 
 const isLoggedIn = (req, res, next) => {
-  res.status(200).json('User is logged in')
+  debug('Is logged as user ', req.UserName)
+  res.status(200).json('OK')
 }
 
-const whoAmI = (req, res, next) => {
-  debug('Inside Whoami - User is ', req.UserId)
-  res.status(200).json('You are logged as userId ' + req.UserId)
+const whoAmI = async (req, res, next) => {
+  const auth_user = process.env.FORCE_USER == 'YES' ? process.env.FAKE_USER_OBJECTID : req.UserId
+
+  try {
+    const UserId = req.UserId
+    debug('In WhoAmI buscando por ' + UserId)
+    const doc = await User.findOne(auth_user).select({
+      name: 1,
+      surname: 1,
+      email: 1,
+      isKeeper: 1,
+      profile_img: 1,
+      lastlogin: 1
+    })
+    debug('El usuario WhoAmI es ', doc)
+    return res.status(200).json(doc)
+  } catch (err) {
+    return res.status(500).json(err.message)
+  }
 }
 
 module.exports = {

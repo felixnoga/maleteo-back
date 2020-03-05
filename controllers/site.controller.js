@@ -21,7 +21,10 @@ const getCurrentUserSite = async (req, res, next) => {
 
   try {
     debug('Populando Current Site para el usuario ' + userId)
-    const site = await Site.find({ owner: userId }).populate('owner')
+    const site = await Site.find({ owner: userId }).populate({
+      path: 'owner',
+      select: 'name surname email profile_img'
+    })
 
     if (site) {
       return res.status(200).json(site)
@@ -32,13 +35,12 @@ const getCurrentUserSite = async (req, res, next) => {
 }
 
 const getAllUsersSite = async (req, res, next) => {
-  const role = req.UserRole
-
-  //if (role !== 'admin') return res.status(400).json('Restricted to admin users')
-
   try {
     debug('Populando Todos los Sites')
-    const site = await Site.find().populate('owner')
+    const site = await Site.find().populate({
+      path: 'owner',
+      select: 'name surname email profile_img'
+    })
 
     if (site) {
       return res.status(200).json(site)

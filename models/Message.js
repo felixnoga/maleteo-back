@@ -8,7 +8,7 @@ const messageSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true
     },
-    body: {
+    ChatMessage: {
       type: String,
       required: true
     },

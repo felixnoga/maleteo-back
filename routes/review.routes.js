@@ -5,9 +5,8 @@ const { isAuthenticated } = require('../middlewares/isAuthenticated')
 
 const router = express.Router()
 
+// API endpoint at /REVIEW/USER
 router.put('/User', [isAuthenticated], reviewController.createCurrentUserReview)
-
-
 
 /*
 router.put('/Blog', [isAuthenticated], reviewController.createCurrentBlogReview)

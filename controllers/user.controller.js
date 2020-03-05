@@ -13,6 +13,10 @@ const getCurrentUser = async (req, res, next) => {
 }
 
 const getAllUsers = async (req, res, next) => {
+
+  const role = req.UserRole
+  if (role !== 'admin') return res.status(400).json('API Restricted to admin users')
+
   try {
     debug('buscando Todos los usuarios')
     const Users = await User.find().populate('review')
