@@ -42,10 +42,12 @@ passport.use(
               //TODO: Finish Adding default profile img from gravatar
               //debug ("At register user is ",JSON.stringify(req.body))
               const gravatarImg = gravatarUrl(email, { size: 200, default: 'mm' })
+              const now = new Date()
               const newUser = new User({
                 profile_img: gravatarImg,
                 ...req.body,  
                 email,
+                lastlogin: now,
                 password: encryptedPass
               })
 

@@ -29,7 +29,7 @@ const register = (req, res, next) => {
 
 const isLoggedIn = (req, res, next) => {
   debug('Is logged as user ', req.UserName)
-  res.status(200).json('User is logged in')
+  res.status(200).json('OK')
 }
 
 const whoAmI = async (req, res, next) => {
@@ -37,14 +37,16 @@ const whoAmI = async (req, res, next) => {
 
   try {
     const UserId = req.UserId
-    debug('In getCurrentUser buscando por ' + UserId)
+    debug('In WhoAmI buscando por ' + UserId)
     const doc = await User.findOne(auth_user).select({
-      _id: 0,
       name: 1,
       surname: 1,
       email: 1,
-      isKeeper: 1
+      isKeeper: 1,
+      profile_img: 1,
+      lastlogin: 1
     })
+    debug('El usuario WhoAmI es ', doc)
     return res.status(200).json(doc)
   } catch (err) {
     return res.status(500).json(err.message)
