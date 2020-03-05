@@ -3,16 +3,16 @@ const router = express.Router()
 const chatController = require('../controllers/chat.controller')
 const { isAuthenticated } = require('../middlewares/isAuthenticated')
 
-// View messages to and from authenticated user
+// Ver mensajes de un usuario autenticado
 router.get('/', isAuthenticated, chatController.getConversations)
 
-// Retrieve single conversation
+// Ver detalles de una conversacion especifica
 router.get('/:conversationId', isAuthenticated, chatController.getConversation)
 
-// Send reply in conversation
+// Enviar respuesta a una conversacion
 router.post('/:conversationId', isAuthenticated, chatController.sendReply)
 
-// Start new conversation
+// Empezar una nueva conversacion
 router.post('/new/:recipient', isAuthenticated, chatController.newConversation)
 
 module.exports = router
