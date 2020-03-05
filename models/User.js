@@ -13,6 +13,7 @@ const userSchema = new Schema(
       required: false
     },
     birthdate: { type: Date, required: false },
+    lastlogin: { type: Date, default: Date.now },
     optIn: { tyoe: Boolean, default: false },
     isKeeper: { type: Boolean, default: false },
     avg_score: { type: Number, default: 0, min: 0, max: 5 },
