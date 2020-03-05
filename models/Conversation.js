@@ -14,7 +14,7 @@ const conversationSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    subject: { type: String, required: true },
+    subject: { type: String, required: false },
     status: {
       type: String,
       enum: ['Activo', 'Cerrado'],

@@ -22,10 +22,26 @@ const userSchema = new Schema(
       enum: ['user', 'admin', 'operator'],
       default: 'user'
     },
-    review: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Review'
-    }
+    welcome_tour_done:  { type: Boolean, default: false },
+    confirmation_code: String,
+    email_confirmed: { type: Boolean, default: false },
+    facebook: {
+      id: String,
+      token: String,
+      email: String,
+      name: String
+    },
+    google: {
+      id: String,
+      token: String,
+      email: String,
+      name: String
+    },
+    review: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+      }
     ]
   },
   {
