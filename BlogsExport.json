@@ -1,0 +1,42 @@
+{
+  "status": "Publicado",
+  "articleType": "Novedad",
+  "tags": ["Noticia", "Novedad", "Viajes", "Descuentos"],
+  "title": "Titulo segundo",
+  "body": "Segundo artículo de prueba para probar el sistema de blog de maleteo, realizado en local.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1583088068634"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1583088068634"
+    }
+  },
+  "__v": {
+    "$numberInt": "0"
+  }
+}
+
+{
+  "status": "Publicado",
+  "articleType": "Novedad",
+  "tags": ["Noticia", "Novedad", "Viajes", "Descuentos"],
+  "title": "Titulo segundo",
+  "body": "Segundo artículo de prueba para probar el sistema de blog de maleteo, realizado en local.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1583088068634"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1583088068634"
+    }
+  },
+  "__v": {
+    "$numberInt": "0"
+  }
+}
+
