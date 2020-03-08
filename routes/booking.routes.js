@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const bookingController = require('../controllers/booking.controller')
 const { isAuthenticated } = require('../middlewares/isAuthenticated')
+const { isFakeAuthenticated } = require('../middlewares/isFakeAuthenticated')
+
 
 router.get('/', [isAuthenticated], bookingController.getCurrentUserBooking)
 router.put('/', [isAuthenticated], bookingController.createCurrentUserBooking)

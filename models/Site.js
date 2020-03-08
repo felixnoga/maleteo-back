@@ -60,5 +60,7 @@ const siteSchema = new Schema(
   }
 )
 
+siteSchema.index({ location: '2dsphere' })
+
 const Site = mongoose.model('Site', siteSchema)
 module.exports = Site
