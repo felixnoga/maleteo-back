@@ -10,6 +10,7 @@ router.put('/', [isAuthenticated], siteController.createCurrentUserSite)
 router.put('/create', [isAuthenticated], siteController.createCurrentUserSite)
 router.get('/', siteController.getCurrentUserSite)
 router.get('/all', siteController.getAllUsersSite)
+router.put('/nearest', siteController.getNearestSites)
 router.put('/:site', [isAuthenticated], siteController.updateSiteById)
 
 //TODO Mixing API Endpoints for sites

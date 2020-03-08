@@ -43,11 +43,34 @@ const getAllUsersSite = async (req, res, next) => {
     })
 
     if (site) {
+      debug(site)
       return res.status(200).json(site)
     }
   } catch (err) {
     return res.status(400).json(err.message)
   }
+}
+
+const getNearestSites = (req, res, next) => {
+
+  const lat = req.body.lat
+  const lng = req.body.lng
+
+  Site.find({
+    location: {
+      $near: {
+        $maxDistance: 10000,
+        $geometry: {
+          type: 'Point',
+          coordinates: [lat, lng]
+        }
+      }
+    }
+  }).find((error, results) => {
+    if (error) console.log(error)
+    console.log(JSON.stringify(results, 0, 2))
+    return res.status(200).json(results)
+  })
 }
 
 const updateSiteById = async (req, res, next) => {
@@ -74,5 +97,6 @@ module.exports = {
   createCurrentUserSite,
   getCurrentUserSite,
   getAllUsersSite,
+  getNearestSites,
   updateSiteById
 }
