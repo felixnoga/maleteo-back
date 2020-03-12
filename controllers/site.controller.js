@@ -1,4 +1,6 @@
 const Site = require('../models/Site')
+const { uploadToCloudinary } = require('../config/cloudinary')
+
 const debug = require('debug')('Maleteo-Back-APICRUD:site.controller')
 
 const createCurrentUserSite = (req, res, next) => {
@@ -15,6 +17,52 @@ const createCurrentUserSite = (req, res, next) => {
       res.status(500).send(err)
     })
 }
+
+const createCurrentUserSitewithPhoto = async (req, res, next) => {
+
+  const keeper = req.UserKeeper
+  if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
+  
+  
+  const images = []
+
+  try {
+
+  for (const file of req.files) {
+    const imageUrl = await uploadToCloudinary(file)
+    debug ("Uploaded image to ",imageUrl)
+    images.push(imageUrl)
+  }
+
+  const newSite = new Site({ ...req.body,  space_img: images, owner: req.UserId })
+  newSite
+    .save()
+    .then(response => {
+      debug ("New Site created ",site)
+      res.status(201).send(response)
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+}
+router.post('/upload-multiple', [fileUpload.array('pictures', 3)], async (req, res, next) => {
+  try {
+    const images = []
+
+    for (const file of req.files) {
+      const imageUrl = await uploadToCloudinary(file)
+      images.push(imageUrl)
+    }
+
+    res.status(200).json({ body: req.body, files: req.files, images })
+
+})
+
 
 const getCurrentUserSite = async (req, res, next) => {
   const userId = req.UserId
@@ -95,6 +143,7 @@ const updateSiteById = async (req, res, next) => {
 
 module.exports = {
   createCurrentUserSite,
+  createCurrentUserSitewithPhoto,
   getCurrentUserSite,
   getAllUsersSite,
   getNearestSites,
