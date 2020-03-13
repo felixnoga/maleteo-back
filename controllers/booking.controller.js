@@ -6,7 +6,7 @@ const createCurrentUserBooking = (req, res, next) => {
   newBooking
     .save()
     .then(response => {
-      res.status(201).send(response)
+      res.status(201).json({status: 'ok'})
     })
     .catch(err => {
       res.status(500).send(err)
@@ -19,7 +19,7 @@ const getCurrentUserBooking = async (req, res, next) => {
   try {
     debug('Populando Current Books para el usuario ' + userId)
     const booking = await Booking.find({ client: userId })
-      .sort('-createdAt')
+      .sort('createdAt')
       .limit(100)
       .populate({
         path: 'client',
@@ -32,7 +32,7 @@ const getCurrentUserBooking = async (req, res, next) => {
       .populate({
         path: 'site',
         select:
-          'location property type space_img name description street city state country region zip'
+          'location property type space_img name description street city state country region zip firstDayPrice extraDayPrice'
       })
 
     if (booking) {

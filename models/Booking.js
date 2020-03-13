@@ -21,8 +21,8 @@ const bookingSchema = new Schema(
     },
     startDate: { type: Date, default: Date.now },
     endDate: { type: Date, default: Date.now },
-    firstDayPrice: { type: Number, default: 6, required: true },
-    extraDayPrice: { type: Number, default: 4, required: true },
+    // firstDayPrice: { type: Number, default: 6, required: true },
+    // extraDayPrice: { type: Number, default: 4, required: true },
     suitcasesPieces: { type: Number, default: 1, min: 1, max: 20, required: true },
     status: {
       type: String,

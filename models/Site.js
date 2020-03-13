@@ -53,7 +53,9 @@ const siteSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Review'
     }
-    ]
+    ],
+    firstDayPrice: { type: Number, default: 6, required: true },
+    extraDayPrice: { type: Number, default: 4, required: true }
   },
   {
     timestamps: true

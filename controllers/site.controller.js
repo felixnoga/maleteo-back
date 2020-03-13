@@ -51,26 +51,34 @@ const getAllUsersSite = async (req, res, next) => {
   }
 }
 
-const getNearestSites = (req, res, next) => {
+const getNearestSites = async (req, res, next) => {
 
   const lat = req.body.lat
   const lng = req.body.lng
+  try {
 
-  Site.find({
-    location: {
-      $near: {
-        $maxDistance: 10000,
-        $geometry: {
-          type: 'Point',
-          coordinates: [lat, lng]
+    const nearestSites = await Site.find({
+      location: {
+        $near: {
+          $maxDistance: 10000,
+          $geometry: {
+            type: 'Point',
+            coordinates: [lat, lng]
+          }
         }
       }
+    }).populate({
+      path: 'owner',
+      select: 'name surname email profile_img'
+    })
+
+    if (nearestSites) {
+      debug(nearestSites)
+      return res.status(200).json(nearestSites)
     }
-  }).find((error, results) => {
-    if (error) console.log(error)
-    console.log(JSON.stringify(results, 0, 2))
-    return res.status(200).json(results)
-  })
+  } catch (err) {
+    return res.status(400).json(err.message)
+  }
 }
 
 const updateSiteById = async (req, res, next) => {

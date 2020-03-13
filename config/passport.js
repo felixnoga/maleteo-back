@@ -85,7 +85,6 @@ passport.use(
                   const error = new Error('There was an unexpected error, try again later')
                   return done(error, null)
                 }
-
                 done(null, token)
               }
             )
@@ -105,7 +104,6 @@ passport.use(
     },
     (payload, done) => {
       const { id } = payload
-
       User.findById(id)
         .then(user => done(null, user))
         .catch(err => done(err, null))

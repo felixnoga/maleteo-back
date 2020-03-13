@@ -5,9 +5,9 @@ const User = require('../models/User')
 const isAuthenticated =  (req, res, next) => {
   passport.authenticate('jwt', (err, user) => {
     debug('Force Used is', process.env.FORCE_USER)
-    if (process.env.FORCE_USER=="YES") {
+    if (process.env.FORCE_USER === 'YES') {
       debug('Forcing authentication to user ', process.env.FAKE_USER_OBJECTID)
-       User.findById(process.env.FAKE_USER_OBJECTID)
+      User.findById(process.env.FAKE_USER_OBJECTID)
       // Be careful.  You ARE not using a promise here
     } else if (err || !user) {
       return res.status(401).json('Unauthorized user')
