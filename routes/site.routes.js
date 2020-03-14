@@ -17,10 +17,10 @@ router.get('/all', siteController.getAllUsersSite)
 router.put('/nearest', siteController.getNearestSites)
 router.put('/:site', [isAuthenticated], siteController.updateSiteById)
 
-//TODO Mixing API Endpoints for sites
+// TODO Mixing API Endpoints for sites
 /*
 router.patch('/:site', [isAuthenticated], siteController.updateSiteById)
 router.get('/:siteId', [isAuthenticated], siteController.getSiteById)
-router.delete(':siteId', [isAuthenticated], siteController.deleteSite)*/
+router.delete(':siteId', [isAuthenticated], siteController.deleteSite) */
 
 module.exports = router

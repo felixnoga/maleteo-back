@@ -1,4 +1,5 @@
 const Site = require('../models/Site')
+const User = require('../models/User')
 const { uploadToCloudinary } = require('../config/cloudinary')
 
 const debug = require('debug')('Maleteo-Back-APICRUD:site.controller')
@@ -25,8 +26,6 @@ const createCurrentUserSitewithPhoto = async (req, res, next) => {
 
   const images = []
 
-
-
   try {
     for (const file of req.files) {
       const imageUrl = await uploadToCloudinary(file)
@@ -34,14 +33,19 @@ const createCurrentUserSitewithPhoto = async (req, res, next) => {
       images.push(imageUrl)
     }
 
-
-    const location = {type: req.body.locationType, coordinates: [req.body.locationLat, req.body.locationLng]}
+    const location = { type: req.body.locationType, coordinates: [req.body.locationLat, req.body.locationLng] }
 
     const newSite = new Site({ ...req.body, location, space_img: images, owner: req.UserId })
     newSite
       .save()
-      .then(site => {
+      .then(async(site) => {
+        const filter = { _id: req.UserId };
+        const update = { isKeeper: true };
 
+        const doc = await User.findOneAndUpdate(filter, update, {
+          new: true
+        })
+        debug('User keeper to true', doc)
         debug('New Site created ', site)
         res.status(201).send(site)
       })
@@ -88,13 +92,10 @@ const getAllUsersSite = async (req, res, next) => {
   }
 }
 
-
 const getNearestSites = async (req, res, next) => {
-
   const lat = req.body.lat
   const lng = req.body.lng
   try {
-
     const nearestSites = await Site.find({
       location: {
         $near: {
