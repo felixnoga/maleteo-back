@@ -20,9 +20,12 @@ const createCurrentUserSite = (req, res, next) => {
 
 const createCurrentUserSitewithPhoto = async (req, res, next) => {
   const keeper = req.UserKeeper
-  if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
+
+  // if (!keeper) return res.status(400).json('Your are not a keeper. Restricted to keeper users')
 
   const images = []
+
+
 
   try {
     for (const file of req.files) {
@@ -31,12 +34,16 @@ const createCurrentUserSitewithPhoto = async (req, res, next) => {
       images.push(imageUrl)
     }
 
-    const newSite = new Site({ ...req.body, space_img: images, owner: req.UserId })
+
+    const location = {type: req.body.locationType, coordinates: [req.body.locationLat, req.body.locationLng]}
+
+    const newSite = new Site({ ...req.body, location, space_img: images, owner: req.UserId })
     newSite
       .save()
-      .then(response => {
+      .then(site => {
+
         debug('New Site created ', site)
-        res.status(201).send(response)
+        res.status(201).send(site)
       })
       .catch(err => {
         res.status(500).send(err)
