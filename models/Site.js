@@ -17,7 +17,7 @@ const siteSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ['Habitacion', 'Hall', 'Trastero', 'Buhardilla', 'Garaje'],
+      enum: ['Habitación', 'Hall', 'Trastero', 'Buhardilla', 'Garaje'],
       default: 'Habitacion'
     },
     space_img: {

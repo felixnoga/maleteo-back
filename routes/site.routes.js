@@ -10,7 +10,7 @@ const { isFakeAuthenticated} = require('../middlewares/isFakeAuthenticated')
 const router = express.Router()
 
 router.put('/', [isAuthenticated], siteController.createCurrentUserSite)
-router.post('/', [isAuthenticated], [fileUpload.array('pictures', 3)], siteController.createCurrentUserSitewithPhoto)
+router.post('/', [isAuthenticated], [fileUpload.array('files', 3)], siteController.createCurrentUserSitewithPhoto)
 router.put('/create', [isAuthenticated], siteController.createCurrentUserSite)
 router.get('/', siteController.getCurrentUserSite)
 router.get('/all', siteController.getAllUsersSite)
